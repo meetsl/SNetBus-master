@@ -40,7 +40,7 @@ class SubscriberMethodFinder(private val subscriberInfoIndexes: List<SubscriberI
         }
         if (subscriberMethods.isEmpty()) {
             throw NetBusException("Subscriber " + subscriberClass
-                    + " and its super classes have no public methods with the @Subscribe annotation")
+                    + " and its super classes have no public methods with the @NetSubscribe annotation")
         } else {
             METHOD_CACHE[subscriberClass] = subscriberMethods
             return subscriberMethods
@@ -111,19 +111,25 @@ class SubscriberMethodFinder(private val subscriberInfoIndexes: List<SubscriberI
         for (method in methods) {
             val modifiers = method.modifiers
             if (modifiers and Modifier.PUBLIC != 0 && modifiers and MODIFIERS_IGNORE == 0) {
-
-                val subscribeAnnotation = method.getAnnotation(NetSubscribe::class.java)
-                if (subscribeAnnotation != null) {
-                    if (findState.checkAdd(method)) {
-                        val threadMode = subscribeAnnotation.threadMode
-                        val netMode = subscribeAnnotation.netMode
-                        findState.subscriberMethods.add(SubscriberMethod(method, threadMode, netMode,
-                                subscribeAnnotation.priority))
+                val parameterTypes = method.parameterTypes
+                if (parameterTypes.isEmpty()) {
+                    val subscribeAnnotation = method.getAnnotation(NetSubscribe::class.java)
+                    if (subscribeAnnotation != null) {
+                        if (findState.checkAdd(method)) {
+                            val threadMode = subscribeAnnotation.threadMode
+                            val netMode = subscribeAnnotation.netMode
+                            findState.subscriberMethods.add(SubscriberMethod(method, threadMode, netMode,
+                                    subscribeAnnotation.priority))
+                        }
                     }
+                } else if (strictMethodVerification && method.isAnnotationPresent(NetSubscribe::class.java)) {
+                    val methodName = method.declaringClass.name + "." + method.name
+                    throw NetBusException("@NetSubscribe method " + methodName +
+                            " must have no parameter but has " + parameterTypes.size)
                 }
             } else if (strictMethodVerification && method.isAnnotationPresent(NetSubscribe::class.java)) {
                 val methodName = method.declaringClass.name + "." + method.name
-                throw NetBusException("$methodName is a illegal @Subscribe method: must be public, non-static, and non-abstract")
+                throw NetBusException("$methodName is a illegal @NetSubscribe method: must be public, non-static, and non-abstract")
             }
         }
     }
