@@ -1,10 +1,13 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_third.*
+import org.meetsl.snetbus.NetBus
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
 
 /**
  * Created by shilong

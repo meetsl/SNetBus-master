@@ -1,11 +1,15 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import org.meetsl.snetbus.lifecycle.test.TestLifecycleActivity
+import org.meetsl.snetbus.NetBus
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
+import org.meetsl.snetbus.ThreadMode
+import org.meetsl.snetbus_master.lifecycle.test.TestLifecycleActivity
 
 class MainActivity : AppCompatActivity() {
 

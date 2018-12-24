@@ -1,8 +1,9 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import org.meetsl.snetbus.NetBus
 
 /**
  * Created by shilong
