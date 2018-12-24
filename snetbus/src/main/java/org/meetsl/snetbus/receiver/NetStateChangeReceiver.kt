@@ -6,38 +6,34 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
-import android.util.Log
+import org.meetsl.snetbus.NetBus
+import org.meetsl.snetbus.NetMode
 
 /**
  * Created by shilong
  *  2018/12/24.
+ *
+ *  对Android 5.0 以及以下版本的兼容,采用静态广播的方式监听网络状态
  */
+@Suppress("DEPRECATION")
 class NetStateChangeReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.i("Callback_Network", "NetStateChangeReceiver ------- 收到广播")
         if (ConnectivityManager.CONNECTIVITY_ACTION == intent?.action && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             //获取联网状态的NetworkInfo对象
             val info = intent.getParcelableExtra<NetworkInfo>(ConnectivityManager.EXTRA_NETWORK_INFO)
             if (info != null) {
                 //如果当前的网络连接成功并且网络连接可用
                 if (NetworkInfo.State.CONNECTED == info.state && info.isAvailable) {
-                    if (info.type == ConnectivityManager.TYPE_WIFI || info.type == ConnectivityManager.TYPE_MOBILE) {
-                        Log.i("Callback_Network", "NetStateChangeReceiver ${getConnectionType(info.type)} 连上")
+                    if (info.type == ConnectivityManager.TYPE_WIFI) {
+                        NetBus.getDefault().setNetMode(NetMode.WIFI)
+                    } else if (info.type == ConnectivityManager.TYPE_MOBILE) {
+                        NetBus.getDefault().setNetMode(NetMode.CELLULAR)
                     }
                 } else {
-                    Log.i("Callback_Network", "NetStateChangeReceiver ${getConnectionType(info.type)} 断开")
+                    NetBus.getDefault().setNetMode(NetMode.UNAVAILABLE_NET)
                 }
             }
         }
-    }
-
-    private fun getConnectionType(type: Int): String {
-        var connType = ""
-        if (type == ConnectivityManager.TYPE_MOBILE) {
-            connType = "3G网络数据"
-        } else if (type == ConnectivityManager.TYPE_WIFI) {
-            connType = "WIFI网络"
-        }
-        return connType
     }
 }

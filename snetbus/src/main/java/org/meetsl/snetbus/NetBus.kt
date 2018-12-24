@@ -1,6 +1,7 @@
 package org.meetsl.snetbus
 
 import android.app.Application
+import android.app.usage.NetworkStatsManager
 import android.content.Context
 import android.net.*
 import android.os.Build
@@ -54,6 +55,7 @@ class NetBus constructor(builder: NetBusBuilder) {
          */
         fun init(appContext: Application) {
             this.appContext = appContext
+            currentNetMode = getNetworkType()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val connectivityManager = this.appContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
                 netCallback = object : ConnectivityManager.NetworkCallback() {
@@ -104,6 +106,17 @@ class NetBus constructor(builder: NetBusBuilder) {
                     }
                 }
                 connectivityManager?.registerNetworkCallback(NetworkRequest.Builder().build(), netCallback)
+            }
+        }
+
+        @Suppress("DEPRECATION")
+        private fun getNetworkType(): NetMode {
+            val connectivityManager = appContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+            val activeNetworkInfo = connectivityManager?.activeNetworkInfo
+            return when (activeNetworkInfo?.type) {
+                ConnectivityManager.TYPE_WIFI -> NetMode.WIFI
+                ConnectivityManager.TYPE_MOBILE -> NetMode.CELLULAR
+                else -> NetMode.UNAVAILABLE_NET
             }
         }
 
@@ -358,5 +371,12 @@ class NetBus constructor(builder: NetBusBuilder) {
 
     override fun toString(): String {
         return "NetBus[indexCount=$indexCount]"
+    }
+
+    fun setNetMode(netMode: NetMode) {
+        if (currentNetMode != netMode) {
+            currentNetMode = netMode
+            post()
+        }
     }
 }
