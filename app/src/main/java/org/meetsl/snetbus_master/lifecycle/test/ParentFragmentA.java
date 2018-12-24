@@ -1,4 +1,4 @@
-package org.meetsl.snetbus.lifecycle.test;
+package org.meetsl.snetbus_master.lifecycle.test;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,10 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import org.meetsl.snetbus.BaseFragment;
 import org.meetsl.snetbus.NetMode;
 import org.meetsl.snetbus.NetSubscribe;
-import org.meetsl.snetbus.R;
+import org.meetsl.snetbus_master.BaseFragment;
+import org.meetsl.snetbus_master.R;
 
 /**
  * @author meetsl

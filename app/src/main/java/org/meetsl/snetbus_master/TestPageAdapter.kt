@@ -1,4 +1,4 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

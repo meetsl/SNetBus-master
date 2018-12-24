@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import org.meetsl.snetbus.lifecycle.LifecycleRegister
+import org.meetsl.snetbus.receiver.NetStateChangeReceiver
 import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
 
@@ -30,6 +32,7 @@ class NetBus constructor(builder: NetBusBuilder) {
     private var logNoSubscriberMessages: Boolean = false
     private var indexCount: Int = 0
     private var subscriptions: CopyOnWriteArrayList<Subscription> = CopyOnWriteArrayList()
+    private var receiversKeybySubscriber: ConcurrentHashMap<NetStateChangeReceiver, Any>? = null
 
     private val currentPostingThreadState = object : ThreadLocal<PostingThreadState>() {
         override fun initialValue(): PostingThreadState {
@@ -158,10 +161,12 @@ class NetBus constructor(builder: NetBusBuilder) {
     private fun bindLifecycle(subscriber: Any) {
         if (!isRegistered(subscriber)) {
             val lifecycle = LifecycleRegister()
-            if (subscriber is FragmentActivity)
+            if (subscriber is FragmentActivity) {
                 lifecycle.registerActivity(subscriber)
-            if (subscriber is Fragment)
+            }
+            if (subscriber is Fragment) {
                 lifecycle.registerFragment(subscriber)
+            }
         }
     }
 

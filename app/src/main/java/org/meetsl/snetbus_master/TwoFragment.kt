@@ -1,6 +1,8 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.util.Log
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
 
 /**
  * Created by shilong

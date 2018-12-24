@@ -3,7 +3,6 @@ package org.meetsl.snetbus.lifecycle
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import android.widget.Toast
 
 /**
  * Created by shilong

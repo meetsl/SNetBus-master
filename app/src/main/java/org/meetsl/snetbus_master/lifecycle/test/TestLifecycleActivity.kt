@@ -1,4 +1,4 @@
-package org.meetsl.snetbus.lifecycle.test
+package org.meetsl.snetbus_master.lifecycle.test
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.util.Log
 import org.meetsl.snetbus.NetBus
 import org.meetsl.snetbus.NetMode
 import org.meetsl.snetbus.NetSubscribe
-import org.meetsl.snetbus.R
+import org.meetsl.snetbus_master.R
 
 /**
  * Created by shilong

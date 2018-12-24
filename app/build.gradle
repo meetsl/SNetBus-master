@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "org.meetsl.snetbus"
+        applicationId "org.meetsl.snetbus_master"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1

@@ -1,6 +1,7 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.app.Application
+import org.meetsl.snetbus.NetBus
 
 /**
  * Created by shilong
