@@ -1,4 +1,4 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import org.meetsl.snetbus.NetBus
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 class PageFragment : Fragment() {
@@ -38,7 +41,7 @@ class PageFragment : Fragment() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI)
-    fun onNetEvent() {
+    fun onNetEvent(isAvailable: Boolean) {
         Log.i("Callback_Network", "${this.javaClass} $name 网络变化了")
     }
 

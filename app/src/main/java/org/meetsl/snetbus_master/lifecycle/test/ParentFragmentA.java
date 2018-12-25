@@ -1,4 +1,4 @@
-package org.meetsl.snetbus.lifecycle.test;
+package org.meetsl.snetbus_master.lifecycle.test;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,10 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import org.meetsl.snetbus.BaseFragment;
 import org.meetsl.snetbus.NetMode;
 import org.meetsl.snetbus.NetSubscribe;
-import org.meetsl.snetbus.R;
+import org.meetsl.snetbus_master.BaseFragment;
+import org.meetsl.snetbus_master.R;
 
 /**
  * @author meetsl
@@ -31,12 +31,12 @@ public class ParentFragmentA extends BaseFragment {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI, priority = 100)
-    public void onEvent() {
+    public void onEvent(boolean isAvailable) {
         Log.i("Callback_Network", getClass().getName() + "网络变化了");
     }
 
     @NetSubscribe(netMode = NetMode.CELLULAR)
-    public void secondEvent() {
+    public void secondEvent(boolean isAvailable) {
         Log.i("Callback_Network", getClass().getName() + "secondEvent 网络变化了");
     }
 }

@@ -1,6 +1,7 @@
 package org.meetsl.snetbus
 
 import android.app.Application
+import android.app.usage.NetworkStatsManager
 import android.content.Context
 import android.net.*
 import android.os.Build
@@ -8,12 +9,14 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import org.meetsl.snetbus.lifecycle.LifecycleRegister
+import org.meetsl.snetbus.receiver.NetStateChangeReceiver
 import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/18.
  */
 class NetBus constructor(builder: NetBusBuilder) {
@@ -30,6 +33,7 @@ class NetBus constructor(builder: NetBusBuilder) {
     private var logNoSubscriberMessages: Boolean = false
     private var indexCount: Int = 0
     private var subscriptions: CopyOnWriteArrayList<Subscription> = CopyOnWriteArrayList()
+    private var receiversKeybySubscriber: ConcurrentHashMap<NetStateChangeReceiver, Any>? = null
 
     private val currentPostingThreadState = object : ThreadLocal<PostingThreadState>() {
         override fun initialValue(): PostingThreadState {
@@ -51,6 +55,7 @@ class NetBus constructor(builder: NetBusBuilder) {
          */
         fun init(appContext: Application) {
             this.appContext = appContext
+            currentNetMode = getNetworkType()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val connectivityManager = this.appContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
                 netCallback = object : ConnectivityManager.NetworkCallback() {
@@ -101,6 +106,17 @@ class NetBus constructor(builder: NetBusBuilder) {
                     }
                 }
                 connectivityManager?.registerNetworkCallback(NetworkRequest.Builder().build(), netCallback)
+            }
+        }
+
+        @Suppress("DEPRECATION")
+        private fun getNetworkType(): NetMode {
+            val connectivityManager = appContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+            val activeNetworkInfo = connectivityManager?.activeNetworkInfo
+            return when (activeNetworkInfo?.type) {
+                ConnectivityManager.TYPE_WIFI -> NetMode.WIFI
+                ConnectivityManager.TYPE_MOBILE -> NetMode.CELLULAR
+                else -> NetMode.UNAVAILABLE_NET
             }
         }
 
@@ -158,10 +174,12 @@ class NetBus constructor(builder: NetBusBuilder) {
     private fun bindLifecycle(subscriber: Any) {
         if (!isRegistered(subscriber)) {
             val lifecycle = LifecycleRegister()
-            if (subscriber is FragmentActivity)
+            if (subscriber is FragmentActivity) {
                 lifecycle.registerActivity(subscriber)
-            if (subscriber is Fragment)
+            }
+            if (subscriber is Fragment) {
                 lifecycle.registerFragment(subscriber)
+            }
         }
     }
 
@@ -320,7 +338,7 @@ class NetBus constructor(builder: NetBusBuilder) {
 
     fun invokeSubscriber(subscription: Subscription) {
         try {
-            subscription.subscriberMethod.method.invoke(subscription.subscriber)
+            subscription.subscriberMethod.method.invoke(subscription.subscriber, currentNetMode != NetMode.UNAVAILABLE_NET)
         } catch (e: InvocationTargetException) {
             handleSubscriberException(subscription, e.cause)
         } catch (e: IllegalAccessException) {
@@ -353,5 +371,12 @@ class NetBus constructor(builder: NetBusBuilder) {
 
     override fun toString(): String {
         return "NetBus[indexCount=$indexCount]"
+    }
+
+    fun setNetMode(netMode: NetMode) {
+        if (currentNetMode != netMode) {
+            currentNetMode = netMode
+            post()
+        }
     }
 }

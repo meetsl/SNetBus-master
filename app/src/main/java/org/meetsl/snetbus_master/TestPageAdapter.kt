@@ -1,11 +1,11 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 class TestPageAdapter(private val fragments: List<Fragment>, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

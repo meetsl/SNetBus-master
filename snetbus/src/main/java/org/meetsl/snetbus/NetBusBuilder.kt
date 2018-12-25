@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/19.
  */
 class NetBusBuilder {
@@ -16,7 +16,7 @@ class NetBusBuilder {
     var logNoSubscriberMessages = true
     var throwSubscriberException: Boolean = false
     var ignoreGeneratedIndex: Boolean = false
-    var strictMethodVerification: Boolean = false
+    var strictMethodVerification: Boolean = true
     var executorService = DEFAULT_EXECUTOR_SERVICE
     var skipMethodVerificationForClasses: MutableList<Class<*>>? = null
     var subscriberInfoIndexes: MutableList<SubscriberInfoIndex>? = null

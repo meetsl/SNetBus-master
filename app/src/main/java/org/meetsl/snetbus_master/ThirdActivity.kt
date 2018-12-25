@@ -1,13 +1,16 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_third.*
+import org.meetsl.snetbus.NetBus
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 class ThirdActivity : AppCompatActivity() {
@@ -24,7 +27,7 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI)
-    fun onNetEvent() {
+    fun onNetEvent(isAvailable: Boolean) {
         Log.i("Callback_Network", "${this.javaClass} 网络变化了")
     }
 

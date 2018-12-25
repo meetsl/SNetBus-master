@@ -1,11 +1,15 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import org.meetsl.snetbus.lifecycle.test.TestLifecycleActivity
+import org.meetsl.snetbus.NetBus
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
+import org.meetsl.snetbus.ThreadMode
+import org.meetsl.snetbus_master.lifecycle.test.TestLifecycleActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,9 +23,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI, threadMode = ThreadMode.POSTING, priority = 1)
-    fun onEvent() {
+    fun onEvent(isAvailable: Boolean) {
         println("网络变化了")
-        Log.i("Callback_Network", "MainActivity ---- 网络变化了")
+        Log.i("Callback_Network", "MainActivity ----$isAvailable 网络变化了")
     }
 
     override fun onDestroy() {

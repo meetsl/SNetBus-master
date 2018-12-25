@@ -1,9 +1,10 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.app.Application
+import org.meetsl.snetbus.NetBus
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/11/26.
  */
 open class SApp : Application() {

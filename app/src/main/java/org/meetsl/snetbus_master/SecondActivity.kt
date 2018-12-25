@@ -1,10 +1,11 @@
-package org.meetsl.snetbus
+package org.meetsl.snetbus_master
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import org.meetsl.snetbus.NetMode
+import org.meetsl.snetbus.NetSubscribe
 
 /**
  * Created by meetsl
@@ -46,7 +47,7 @@ class SecondActivity : BaseActivity() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI)
-    fun onNetEvent() {
+    fun onNetEvent(isAvailable: Boolean) {
         Log.i("Callback_Network", "${this.javaClass} 网络变化了")
     }
 }

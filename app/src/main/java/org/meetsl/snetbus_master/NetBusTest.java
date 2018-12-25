@@ -1,9 +1,14 @@
-package org.meetsl.snetbus;
+package org.meetsl.snetbus_master;
 
 import android.util.Log;
 
+import org.meetsl.snetbus.NetBus;
+import org.meetsl.snetbus.NetMode;
+import org.meetsl.snetbus.NetSubscribe;
+import org.meetsl.snetbus.ThreadMode;
+
 /**
- * Created by shilong
+ * Created by meetsl
  * 2018/12/19.
  */
 public class NetBusTest {
@@ -13,7 +18,7 @@ public class NetBusTest {
     }
 
     @NetSubscribe(netMode = NetMode.CELLULAR, threadMode = ThreadMode.MAIN, priority = 1)
-    public void onEvent() {
+    public void onEvent(boolean isAvailable) {
         Log.i("Callback_Network", "NetBusTest ---- 网络变化了");
     }
 
