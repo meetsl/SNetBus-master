@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SNetBus</string>
+    <string name="normal_layout">Normal Layout</string>
+    <string name="empty_layout">Empty Layout</string>
+    <string name="load_layout">Load Layout</string>
+    <string name="net_error_layout">Net Error Layout</string>
 </resources>

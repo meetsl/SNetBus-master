@@ -9,4 +9,6 @@
     <string name="a_content">This is A</string>
     <string name="test_lifecycle">Test Lifecycle</string>
     <string name="btn_string_3">Lifecycle</string>
+    <string name="app_net_error_layout">app net error layout</string>
+    <string name="app_load_view">app 正在加载中...</string>
 </resources>

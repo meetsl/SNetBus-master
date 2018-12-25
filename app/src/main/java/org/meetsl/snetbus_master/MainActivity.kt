@@ -9,15 +9,20 @@ import org.meetsl.snetbus.NetBus
 import org.meetsl.snetbus.NetMode
 import org.meetsl.snetbus.NetSubscribe
 import org.meetsl.snetbus.ThreadMode
+import org.meetsl.snetbus.widget.PageStateLayout
 import org.meetsl.snetbus_master.lifecycle.test.TestLifecycleActivity
 
 class MainActivity : AppCompatActivity() {
 
     private val netBusTest = NetBusTest()
 
+    private lateinit var stateLayout: PageStateLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        stateLayout = PageStateLayout(this)
+        stateLayout.setNormalView(R.layout.activity_main)
+        setContentView(stateLayout)
         NetBus.getDefault().register(this)
         netBusTest.run()
     }
@@ -25,6 +30,10 @@ class MainActivity : AppCompatActivity() {
     @NetSubscribe(netMode = NetMode.WIFI, threadMode = ThreadMode.POSTING, priority = 1)
     fun onEvent(isAvailable: Boolean) {
         println("网络变化了")
+        if (!isAvailable)
+            stateLayout.showNetErrorView()
+        else
+            stateLayout.showNormalView()
         Log.i("Callback_Network", "MainActivity ----$isAvailable 网络变化了")
     }
 

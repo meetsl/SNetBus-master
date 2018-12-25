@@ -50,6 +50,11 @@ class NetBus constructor(builder: NetBusBuilder) {
         private var appContext: Application? = null
         private var netCallback: ConnectivityManager.NetworkCallback? = null
 
+        var normalResId = R.layout.layout_normal_default
+        var emptyResId = R.layout.layout_empty_default
+        var loadResId = R.layout.layout_load_default
+        var netErrorResId = R.layout.layout_net_error_default
+
         /**
          *  初始化 NetBus ,添加对网路的监听
          */
@@ -107,6 +112,16 @@ class NetBus constructor(builder: NetBusBuilder) {
                 }
                 connectivityManager?.registerNetworkCallback(NetworkRequest.Builder().build(), netCallback)
             }
+        }
+
+        fun initNetView(normalResId: Int = R.layout.layout_normal_default,
+                        emptyResId: Int = R.layout.layout_empty_default,
+                        loadResId: Int = R.layout.layout_load_default,
+                        netErrorResId: Int = R.layout.layout_net_error_default) {
+            this.normalResId = normalResId
+            this.emptyResId = emptyResId
+            this.loadResId = loadResId
+            this.netErrorResId = netErrorResId
         }
 
         @Suppress("DEPRECATION")
