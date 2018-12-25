@@ -10,7 +10,7 @@ import org.meetsl.snetbus.NetBus
 import org.meetsl.snetbus.NetMode
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/24.
  *
  *  对Android 5.0 以及以下版本的兼容,采用静态广播的方式监听网络状态

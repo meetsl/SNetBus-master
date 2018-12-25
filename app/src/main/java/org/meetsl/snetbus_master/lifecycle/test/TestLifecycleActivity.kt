@@ -9,7 +9,7 @@ import org.meetsl.snetbus.NetSubscribe
 import org.meetsl.snetbus_master.R
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 class TestLifecycleActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class TestLifecycleActivity : AppCompatActivity() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI)
-    fun onEvent() {
+    fun onEvent(isAvailable: Boolean) {
         Log.i("Callback_Network", "${this.javaClass} 网络变化了")
     }
 }

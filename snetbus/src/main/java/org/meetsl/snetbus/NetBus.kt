@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/18.
  */
 class NetBus constructor(builder: NetBusBuilder) {
@@ -338,7 +338,7 @@ class NetBus constructor(builder: NetBusBuilder) {
 
     fun invokeSubscriber(subscription: Subscription) {
         try {
-            subscription.subscriberMethod.method.invoke(subscription.subscriber)
+            subscription.subscriberMethod.method.invoke(subscription.subscriber, currentNetMode != NetMode.UNAVAILABLE_NET)
         } catch (e: InvocationTargetException) {
             handleSubscriberException(subscription, e.cause)
         } catch (e: IllegalAccessException) {

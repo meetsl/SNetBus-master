@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 class LifecycleRegister {

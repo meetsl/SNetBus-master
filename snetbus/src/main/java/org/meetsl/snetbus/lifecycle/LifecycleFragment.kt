@@ -3,7 +3,7 @@ package org.meetsl.snetbus.lifecycle
 import android.support.v4.app.Fragment
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  *
  *   这是一个空白的 Fragment，将其添加在 FragmentActivity 或者 Fragment 中，同步生命周期

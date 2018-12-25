@@ -1,5 +1,6 @@
 package org.meetsl.snetbus
 
+import android.text.TextUtils
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 import java.util.ArrayList
@@ -7,7 +8,7 @@ import java.util.HashMap
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/18.
  */
 class SubscriberMethodFinder(private val subscriberInfoIndexes: List<SubscriberInfoIndex>?, private val strictMethodVerification: Boolean, private val ignoreGeneratedIndex: Boolean) {
@@ -112,20 +113,26 @@ class SubscriberMethodFinder(private val subscriberInfoIndexes: List<SubscriberI
             val modifiers = method.modifiers
             if (modifiers and Modifier.PUBLIC != 0 && modifiers and MODIFIERS_IGNORE == 0) {
                 val parameterTypes = method.parameterTypes
-                if (parameterTypes.isEmpty()) {
+                if (parameterTypes.size == 1) {
                     val subscribeAnnotation = method.getAnnotation(NetSubscribe::class.java)
                     if (subscribeAnnotation != null) {
-                        if (findState.checkAdd(method)) {
-                            val threadMode = subscribeAnnotation.threadMode
-                            val netMode = subscribeAnnotation.netMode
-                            findState.subscriberMethods.add(SubscriberMethod(method, threadMode, netMode,
-                                    subscribeAnnotation.priority))
+                        if (TextUtils.equals("boolean", parameterTypes[0].name)) {
+                            if (findState.checkAdd(method)) {
+                                val threadMode = subscribeAnnotation.threadMode
+                                val netMode = subscribeAnnotation.netMode
+                                findState.subscriberMethods.add(SubscriberMethod(method, threadMode, netMode,
+                                        subscribeAnnotation.priority))
+                            }
+                        } else {
+                            val methodName = method.declaringClass.name + "." + method.name
+                            throw NetBusException("@NetSubscribe method " + methodName +
+                                    " must have only one Boolean parameter but the parameter is " + parameterTypes[0].name)
                         }
                     }
                 } else if (strictMethodVerification && method.isAnnotationPresent(NetSubscribe::class.java)) {
                     val methodName = method.declaringClass.name + "." + method.name
                     throw NetBusException("@NetSubscribe method " + methodName +
-                            " must have no parameter but has " + parameterTypes.size)
+                            " must have only one parameter but has " + parameterTypes.size)
                 }
             } else if (strictMethodVerification && method.isAnnotationPresent(NetSubscribe::class.java)) {
                 val methodName = method.declaringClass.name + "." + method.name
