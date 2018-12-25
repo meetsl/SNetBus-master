@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import org.meetsl.snetbus.NetBus
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 abstract class BaseActivity : AppCompatActivity() {

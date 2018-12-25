@@ -1,7 +1,7 @@
 package org.meetsl.snetbus
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/19.
  */
 enum class NetMode(val transport: Int) {

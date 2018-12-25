@@ -1,7 +1,7 @@
 package org.meetsl.snetbus.lifecycle
 
 /**
- * Created by shilong
+ * Created by meetsl
  *  2018/12/21.
  */
 interface LifecycleListener {

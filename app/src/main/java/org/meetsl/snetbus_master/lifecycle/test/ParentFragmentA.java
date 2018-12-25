@@ -31,12 +31,12 @@ public class ParentFragmentA extends BaseFragment {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI, priority = 100)
-    public void onEvent() {
+    public void onEvent(boolean isAvailable) {
         Log.i("Callback_Network", getClass().getName() + "网络变化了");
     }
 
     @NetSubscribe(netMode = NetMode.CELLULAR)
-    public void secondEvent() {
+    public void secondEvent(boolean isAvailable) {
         Log.i("Callback_Network", getClass().getName() + "secondEvent 网络变化了");
     }
 }

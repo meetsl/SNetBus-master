@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI, threadMode = ThreadMode.POSTING, priority = 1)
-    fun onEvent() {
+    fun onEvent(isAvailable: Boolean) {
         println("网络变化了")
-        Log.i("Callback_Network", "MainActivity ---- 网络变化了")
+        Log.i("Callback_Network", "MainActivity ----$isAvailable 网络变化了")
     }
 
     override fun onDestroy() {

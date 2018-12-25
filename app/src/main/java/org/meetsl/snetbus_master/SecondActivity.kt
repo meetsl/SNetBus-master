@@ -47,7 +47,7 @@ class SecondActivity : BaseActivity() {
     }
 
     @NetSubscribe(netMode = NetMode.WIFI)
-    fun onNetEvent() {
+    fun onNetEvent(isAvailable: Boolean) {
         Log.i("Callback_Network", "${this.javaClass} 网络变化了")
     }
 }
