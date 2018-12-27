@@ -21,8 +21,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         stateLayout = PageStateLayout(this)
+        //设置正常显示视图
         stateLayout.setNormalView(R.layout.activity_main)
+        //设置该 Page 的 空视图
+        stateLayout.setEmptyView(R.layout.layout_empty_default)
+        //设置该 Page 的加载视图
+        stateLayout.setLoadingView(R.layout.layout_loading_view)
+        //设置该 Page 的网络错误视图
+        stateLayout.setNetErrorView(R.layout.layout_net_error_view)
+        //显示
         setContentView(stateLayout)
+        stateLayout.showNormalView()
         NetBus.getDefault().register(this)
         netBusTest.run()
     }

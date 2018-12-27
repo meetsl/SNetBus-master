@@ -37,3 +37,60 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+signing {
+    sign configurations.archives
+}
+
+group = "com.github.meetsl.netbus"
+archivesBaseName = "SNetBus"
+version = "1.1"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment {
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'SNetBus'
+                packaging 'aar'
+                description 'Let your app observe the network state anywhere .'
+                url 'https://github.com/meetsl/SNetBus-master'
+
+                scm {
+                    connection 'scm:git:https://github.com/meetsl/SNetBus-master.git'
+                    developerConnection 'scm:git:https://github.com/meetsl/SNetBus-master.git'
+                    url 'https://github.com/meetsl/SNetBus-master.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'meet_sl'
+                        name 'meetsl'
+                        email 'dboy_sl@163.com'
+                    }
+                }
+            }
+        }
+    }
+}
