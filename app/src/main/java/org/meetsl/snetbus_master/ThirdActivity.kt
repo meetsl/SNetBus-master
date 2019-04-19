@@ -1,9 +1,9 @@
 package org.meetsl.snetbus_master
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_third.*
 import org.meetsl.snetbus.NetBus
 import org.meetsl.snetbus.NetMode

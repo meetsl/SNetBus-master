@@ -1,7 +1,7 @@
 package org.meetsl.snetbus_master.lifecycle.test;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;

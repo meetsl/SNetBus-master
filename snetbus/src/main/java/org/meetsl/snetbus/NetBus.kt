@@ -1,12 +1,9 @@
 package org.meetsl.snetbus
 
 import android.app.Application
-import android.app.usage.NetworkStatsManager
 import android.content.Context
 import android.net.*
 import android.os.Build
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.util.Log
 import org.meetsl.snetbus.lifecycle.LifecycleRegister
 import org.meetsl.snetbus.receiver.NetStateChangeReceiver
@@ -189,10 +186,10 @@ class NetBus constructor(builder: NetBusBuilder) {
     private fun bindLifecycle(subscriber: Any) {
         if (!isRegistered(subscriber)) {
             val lifecycle = LifecycleRegister()
-            if (subscriber is FragmentActivity) {
+            if (subscriber is androidx.fragment.app.FragmentActivity) {
                 lifecycle.registerActivity(subscriber)
             }
-            if (subscriber is Fragment) {
+            if (subscriber is androidx.fragment.app.Fragment) {
                 lifecycle.registerFragment(subscriber)
             }
         }
@@ -205,7 +202,7 @@ class NetBus constructor(builder: NetBusBuilder) {
         }
 
         //If the subscriber is instance of FragmentActivity or Fragment,we bind to lifecycle here
-        if (subscriber is FragmentActivity || subscriber is Fragment) {
+        if (subscriber is androidx.fragment.app.FragmentActivity || subscriber is androidx.fragment.app.Fragment) {
             bindLifecycle(subscriber)
         }
 

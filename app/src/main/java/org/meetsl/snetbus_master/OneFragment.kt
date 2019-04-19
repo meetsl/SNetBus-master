@@ -1,11 +1,11 @@
 package org.meetsl.snetbus_master
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import org.meetsl.snetbus.NetBus
 import org.meetsl.snetbus.NetMode
 import org.meetsl.snetbus.NetSubscribe
